@@ -100,6 +100,20 @@ else()
   set(PIO_MAX_CACHED_IO_REGIONS 0)
 endif()
 
+if(DEFINED PIO_MAX_LUSTRE_OSTS)
+  message (STATUS "Using PIO_MAX_LUSTRE_OSTS = " ${PIO_MAX_LUSTRE_OSTS})
+else()
+  cmake_host_system_information (RESULT FQDN_SITENAME QUERY FQDN)
+  if(FQDN_SITENAME MATCHES "^cori")
+    set(PIO_MAX_LUSTRE_OSTS 72)
+  elseif (FQDN_SITENAME MATCHES "^theta")
+    set(PIO_MAX_LUSTRE_OSTS 48)
+  else()
+    set(PIO_MAX_LUSTRE_OSTS 0)
+  endif()
+  message (STATUS "Using PIO_MAX_LUSTRE_OSTS = " ${PIO_MAX_LUSTRE_OSTS} " (default)")
+endif()
+
 #==============================================================================
 #  PREPEND TO CMAKE MODULE PATH
 #==============================================================================

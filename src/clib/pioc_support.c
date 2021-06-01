@@ -2586,6 +2586,7 @@ int PIOc_createfile_int(int iosysid, int *ncidp, int *iotype, const char *filena
             MPI_Info_set(ios->info, "romio_no_indep_rw", "true");
 #endif
 
+#if PIO_MAX_LUSTRE_OSTS
             /* Users can set striping_factor and striping_unit hints for files created with
                MPI-IO. If they are not explicitly set with PIO_set_hint or PIOc_set_hint,
                use some default values below.
@@ -2603,7 +2604,7 @@ int PIOc_createfile_int(int iosysid, int *ncidp, int *iotype, const char *filena
                    This will result in poor performance and can adversely affect
                    the entire file system.
                  */
-                const int STRIPE_LIMIT = 72;
+                const int STRIPE_LIMIT = PIO_MAX_LUSTRE_OSTS;
 
                 int striping_factor_size = (ios->num_iotasks < STRIPE_LIMIT)? ios->num_iotasks : STRIPE_LIMIT;
                 char striping_factor_str[PIO_MAX_NAME];
@@ -2619,6 +2620,7 @@ int PIOc_createfile_int(int iosysid, int *ncidp, int *iotype, const char *filena
                 /* Default (1MB) has been most successful on NERSC */
                 MPI_Info_set(ios->info, "striping_unit", "1048576");
             }
+#endif
 
             /* Set some PnetCDF I/O hints below */
 
