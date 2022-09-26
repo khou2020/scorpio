@@ -213,6 +213,7 @@ int adios_get_attr_a2(adios2::IO &bpIO, char *aname, std::string &atype, Attribu
 }
 
 /* Timer functions to separate time for read (ADIOS) and write (PIO) */
+#define ADIOS_TIMING
 #ifdef ADIOS_TIMING
 static double time_read, time_write;
 static double time_temp_read, time_temp_write;
