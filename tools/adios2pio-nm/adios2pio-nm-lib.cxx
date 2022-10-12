@@ -239,7 +239,7 @@ void TimerReport_nm(MPI_Comm comm)
     MPI_Reduce(&time_write, &tw_max, 1, MPI_DOUBLE, MPI_MAX, 0, comm);
     MPI_Reduce(&time_write, &tw_sum, 1, MPI_DOUBLE, MPI_SUM, 0, comm);
 
-    if (!rank && debug_out)
+    if (!rank)
     {
         cout << "Timing information:     Max     Sum of all\n";
         cout.precision(2);
